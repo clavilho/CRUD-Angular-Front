@@ -1,7 +1,9 @@
 import { Product } from "./../product.model";
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { ProductService } from "../product.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { ProductReadComponent } from "../product-read/product-read.component";
 
 @Component({
   selector: "app-product-delete",
@@ -13,13 +15,12 @@ export class ProductDeleteComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute,
-    private router: Router
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialog
   ) {}
 
   ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get("id");
-    this.productService.readById(id).subscribe((product) => {
+    this.productService.readById(this.data).subscribe((product: any) => {
       this.product = product;
     });
   }
@@ -27,11 +28,12 @@ export class ProductDeleteComponent implements OnInit {
   delete() {
     this.productService.delete(this.product.id).subscribe(() => {
       this.productService.showMessage("O item foi excluido com sucesso");
-      this.router.navigate(["/products"]);
+      this.dialogRef.closeAll();
     });
+    this.productService.read().subscribe();
   }
 
   cancel() {
-    this.router.navigate(["/products"]);
+    this.dialogRef.closeAll();
   }
 }

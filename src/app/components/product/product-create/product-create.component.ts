@@ -19,10 +19,16 @@ export class ProductCreateComponent implements OnInit {
   ngOnInit(): void {}
 
   createProduct(): void {
-    this.productService.create(this.product).subscribe(() => {
-      this.productService.showMessage("Produto Criado!");
-      this.router.navigate(["/products"]);
-    });
+    if (this.product.name === "" || this.product.price === null) {
+      this.productService.messageRequire(
+        "Necessario preencher os campos para cadastrar um produto"
+      );
+    } else {
+      this.productService.create(this.product).subscribe(() => {
+        this.productService.showMessage("Produto Criado!");
+        this.router.navigate(["/products"]);
+      });
+    }
   }
 
   cancel() {

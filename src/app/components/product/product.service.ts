@@ -23,6 +23,15 @@ export class ProductService {
     });
   }
 
+  messageRequire(msg: string) {
+    this.snackBar.open(msg, "X", {
+      duration: 3000,
+      horizontalPosition: "right",
+      verticalPosition: "top",
+      panelClass: ["msg-no-success"],
+    });
+  }
+
   create(product: Product): Observable<Product> {
     return this.http.post<Product>(this.baseUrl, product).pipe(
       map((obj) => obj),

@@ -25,7 +25,8 @@
         <a routerLink="/products/update/{{ row.id }}" class="edit">
           <i class="material-icons" style="color: #d9cd26">edit</i>
         </a>
-        <a routerLink="/products/delete/{{ row.id }}" class="delete">
+        <!-- <a routerLink="/products/delete/{{ row.id }}" class="delete"> -->
+        <a class="delete" (click)="abrirModal(row.id)">
           <i class="material-icons" style="color: red">delete</i>
         </a>
       </td>
