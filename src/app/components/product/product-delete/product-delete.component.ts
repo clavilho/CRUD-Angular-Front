@@ -30,7 +30,7 @@ export class ProductDeleteComponent implements OnInit {
       this.productService.showMessage("O item foi excluido com sucesso");
       this.dialogRef.closeAll();
     });
-    this.productService.read().subscribe();
+    window.location.reload();
   }
 
   cancel() {
